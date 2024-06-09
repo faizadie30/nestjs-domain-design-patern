@@ -89,7 +89,10 @@ export class UserService {
     delete data_user.password;
     const token = await this.generateToken(data_user);
     data_user.id = this.convertionHelper.convertDataToNumber(data_user.id);
+    data_user.token = token;
     req.session[`user${data_user.id}`] = data_user;
+    delete data_user.token;
+
     return {
       data: data_user,
       token,

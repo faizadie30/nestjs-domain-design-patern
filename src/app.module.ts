@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './app/controllers/user/user.controller';
 import { jwtConstants } from './constants';
@@ -8,15 +10,16 @@ import { UserService } from './domain/user/user.service';
 import cors from './infrastructure/configs/cors';
 import dataSource from './infrastructure/database/data-source';
 import { DatabaseModule } from './infrastructure/database/database.module';
-import { Films } from './infrastructure/models/films.model';
-import { Users } from './infrastructure/models/users.model';
+import { JWTAuthGuard } from './infrastructure/guard/jwt.guard';
 import { ConvertionHelper } from './infrastructure/helpers/convertion.helper';
 import { UserHelper } from './infrastructure/helpers/user.helper';
-import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './infrastructure/strategies/local.strategy';
+import { Films } from './infrastructure/models/films.model';
+import { Users } from './infrastructure/models/users.model';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
-import { JWTAuthGuard } from './infrastructure/guard/jwt.guard';
-import { APP_GUARD } from '@nestjs/core';
+import { LocalStrategy } from './infrastructure/strategies/local.strategy';
+import { FilmController } from './app/controllers/film/film.controller';
+import { FilmService } from './domain/film/film.service';
+import { GlobalHelper } from './infrastructure/helpers/global.helper';
 
 @Module({
   imports: [
@@ -34,11 +37,13 @@ import { APP_GUARD } from '@nestjs/core';
     TypeOrmModule.forFeature([Users, Films]),
     PassportModule,
   ],
-  controllers: [UserController],
+  controllers: [UserController, FilmController],
   providers: [
     UserService,
+    FilmService,
     ConvertionHelper,
     UserHelper,
+    GlobalHelper,
     LocalStrategy,
     JwtStrategy,
     {

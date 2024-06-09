@@ -33,6 +33,7 @@ export class JWTAuthGuard extends AuthGuard('jwt_auth') {
       const token = auth.split(' ')[1];
       const user = await this.userService.verifyToken(token);
       if (user) {
+        user.token = token;
         request['user'] = user;
         return true;
       }

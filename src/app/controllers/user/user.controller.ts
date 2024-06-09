@@ -7,12 +7,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { LoginDTO } from '../../../app/dto/login.dto';
 import { RegisterDTO } from '../../../app/dto/register.dto';
-import { PublicRoute } from '../../../infrastructure/decorator/public-route.decorator';
 import { RegisterInteface } from '../../../app/interface/register.interface';
 import { UserService } from '../../../domain/user/user.service';
+import { PublicRoute } from '../../../infrastructure/decorator/public-route.decorator';
 import { LocalAuthGuard } from '../../../infrastructure/guard/local.guard';
-import { LoginDTO } from '../../../app/dto/login.dto';
 import { LoginInteface } from '../../interface/login.interface';
 
 @ApiTags('Users')

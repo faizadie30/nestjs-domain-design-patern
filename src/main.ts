@@ -23,7 +23,7 @@ async function bootstrap() {
   app.use(
     session({
       secret: secretKeySession,
-      resave: false,
+      resave: true,
       saveUninitialized: false,
     }),
   );
@@ -48,6 +48,14 @@ async function bootstrap() {
     .setTitle('API Collection')
     .setDescription('Collections')
     .setVersion('1.0')
+    .addBearerAuth({
+      description: `[just text field] Please enter token in following format: Bearer <JWT>`,
+      name: 'Authorization',
+      bearerFormat: 'Bearer',
+      scheme: 'Bearer',
+      type: 'http',
+      in: 'Header',
+    })
     .addServer(API_URL + '/', 'Local environment')
     .build();
   const document = SwaggerModule.createDocument(app, options);
