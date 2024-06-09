@@ -1,5 +1,5 @@
 # About
-Project Dummy API Case Films
+Dummy API Case Films
 
 # Technologies & Libraries
 1. nodejs version 20.11.0
@@ -16,7 +16,6 @@ Project Dummy API Case Films
 nestjs available 2 engines, and in project api, i use engine default(expressjs)
 
 # Project API Architecture
-i use DDD Pattern
-references: [https://bilaltehseen.medium.com/minimal-domain-driven-design-for-nest-js-b07152ec9970](https://bilaltehseen.medium.com/minimal-domain-driven-design-for-nest-js-b07152ec9970)
+i use DDD Pattern, and reference from: [https://bilaltehseen.medium.com/minimal-domain-driven-design-for-nest-js-b07152ec9970](https://bilaltehseen.medium.com/minimal-domain-driven-design-for-nest-js-b07152ec9970)
 
 # How To Run

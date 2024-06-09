@@ -19,3 +19,12 @@ export const TypeOrmConfig = {
 };
 
 export const APP_PORT = process.env.PORT || 3000;
+export const API_URL = process.env.API_URL;
+
+export const jwtConstants = {
+  secret: process.env.ACCESS_TOKEN_KEY,
+  expiresIn: process.env.ACCESS_TOKEN_AGE,
+  refreshExpiresIn: process.env.REFRESH_TOKEN_AGE,
+};
+
+export const secretKeySession = process.env.SECRET_KEY_SESSION;
