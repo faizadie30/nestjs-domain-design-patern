@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { ConvertionHelper } from '../../infrastructure/helpers/convertion.helper';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Films } from '../../infrastructure/models/films.model';
-import { GlobalHelper } from '../../infrastructure/helpers/global.helper';
-import { AllListFilmsInterface } from '../../app/interface/allListFilm.interface';
 import { FindAllFilmsDTO } from '../../app/dto/findAllFilms.dto';
+import { AllListFilmsInterface } from '../../app/interface/allListFilm.interface';
 import { FindFilmByIdInterface } from '../../app/interface/findFilmById.interface';
+import { ConvertionHelper } from '../../infrastructure/helpers/convertion.helper';
+import { GlobalHelper } from '../../infrastructure/helpers/global.helper';
+import { Films } from '../../infrastructure/models/films.model';
 
 @Injectable()
 export class FilmService {
@@ -70,5 +70,22 @@ export class FilmService {
       status: 'success',
       data,
     };
+  }
+
+  async deleteFilm(id: string): Promise<any> {
+    const getFilm = await this.filmsRepository.findOneBy({
+      id: this.convertionHelper.convertDataToNumber(id),
+    });
+
+    if (!getFilm) {
+      throw new NotFoundException('Film not found');
+    }
+
+    return await this.filmsRepository
+      .createQueryBuilder('films')
+      .delete()
+      .from(Films)
+      .where('films.id = :id', { id })
+      .execute();
   }
 }

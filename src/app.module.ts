@@ -20,9 +20,27 @@ import { LocalStrategy } from './infrastructure/strategies/local.strategy';
 import { FilmController } from './app/controllers/film/film.controller';
 import { FilmService } from './domain/film/film.service';
 import { GlobalHelper } from './infrastructure/helpers/global.helper';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 1000,
+        limit: 3,
+      },
+      {
+        name: 'medium',
+        ttl: 10000,
+        limit: 20,
+      },
+      {
+        name: 'long',
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV || 'development'}`,

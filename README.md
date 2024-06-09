@@ -11,6 +11,8 @@ Dummy API Case Films
 7. helmet
 8. dotenv
 9. mutler
+10. throttler from nestjs library
+11. swagger
 
 # Engine
 nestjs available 2 engines, and in project api, i use engine default(expressjs)
@@ -33,3 +35,8 @@ npm run migration:run
 ```bash
 npm run start:dev
 ```
+
+# Documentation API
+http://your_url/api-docs
+
+example in my local: http://localhost:3000/api-docs
