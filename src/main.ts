@@ -10,6 +10,7 @@ import 'module-alias/register';
 import * as path from 'path';
 import { AppModule } from './app.module';
 import { API_URL, APP_PORT, secretKeySession } from './constants';
+import { NestExpressApplication } from '@nestjs/platform-express';
 moduleAlias.addAliases({
   '@domain': path.resolve(__dirname, 'domain'),
   '@application': path.resolve(__dirname, 'app'),
@@ -18,7 +19,7 @@ moduleAlias.addAliases({
 });
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   app.use(
     session({
@@ -43,6 +44,11 @@ async function bootstrap() {
 
   app.enableCors(configService.get('cors'));
   app.use(helmet());
+
+  const rootFile = path.join(__dirname, '../public');
+  app.useStaticAssets(rootFile, {
+    prefix: '/public/',
+  });
 
   const options = new DocumentBuilder()
     .setTitle('API Collection')
