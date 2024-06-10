@@ -3,24 +3,24 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { FilmController } from './app/controllers/film/film.controller';
 import { UserController } from './app/controllers/user/user.controller';
 import { jwtConstants } from './constants';
+import { FilmService } from './domain/film/film.service';
 import { UserService } from './domain/user/user.service';
 import cors from './infrastructure/configs/cors';
 import dataSource from './infrastructure/database/data-source';
 import { DatabaseModule } from './infrastructure/database/database.module';
 import { JWTAuthGuard } from './infrastructure/guard/jwt.guard';
 import { ConvertionHelper } from './infrastructure/helpers/convertion.helper';
+import { GlobalHelper } from './infrastructure/helpers/global.helper';
 import { UserHelper } from './infrastructure/helpers/user.helper';
 import { Films } from './infrastructure/models/films.model';
 import { Users } from './infrastructure/models/users.model';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 import { LocalStrategy } from './infrastructure/strategies/local.strategy';
-import { FilmController } from './app/controllers/film/film.controller';
-import { FilmService } from './domain/film/film.service';
-import { GlobalHelper } from './infrastructure/helpers/global.helper';
-import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [

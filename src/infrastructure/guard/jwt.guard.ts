@@ -1,5 +1,6 @@
 import {
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -23,24 +24,29 @@ export class JWTAuthGuard extends AuthGuard('jwt_auth') {
         IS_PUBLIC_KEY,
         [context.getHandler(), context.getClass()],
       );
-
       if (isPublic) {
         return true;
       }
 
       const request = context.switchToHttp().getRequest();
       const auth = request.headers['authorization'];
+      if (!auth) {
+        throw new ForbiddenException('Not found token access');
+      }
+
       const token = auth.split(' ')[1];
+
       const user = await this.userService.verifyToken(token);
       if (user) {
         user.token = token;
         request['user'] = user;
         return true;
+      } else {
+        throw new UnauthorizedException('token expired or token not valid');
       }
-      return super.canActivate(context);
+      // return super.canActivate(context);
     } catch (error) {
-      console.error(error);
-      throw new UnauthorizedException('token expired');
+      throw error;
     }
   }
 }
